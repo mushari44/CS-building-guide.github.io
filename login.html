@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Login</title>
+    <title>Admin login</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -22,6 +22,61 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listener to the form submission
+            var form = document.getElementById('login-form');
+            form.addEventListener('submit', validateForm);
+        });
+
+        function validateForm(event) {
+            event.preventDefault(); // Prevent the form from submitting
+
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            // Validate inputs
+            if (username.trim() === '' || password.trim() === '') {
+                displayError('Please enter both username and password.');
+                return;
+            }
+
+            // Perform admin login validation (e.g., check against a database)
+            // In this example, we assume the password is hashed (using bcrypt, for example)
+            var hashedPassword = 'hashed_password'; // Replace with your actual hashed password
+
+            // Simulate password verification by comparing the hashed password with the input password
+            if (verifyPassword(password, hashedPassword)&& verifyUserName(username, hashedPassword)) {
+                // Successful login, redirect to admin dashboard or homepage
+                window.location.href = "AdminMain.html";
+            } else {
+                // Invalid credentials, display error message
+                displayError('Invalid username or password.');
+            }
+        }
+
+        function verifyPassword(password, hashedPassword) {
+            // Implement your password verification logic here
+            // Compare the input password with the stored hashed password
+            // You may use a library like bcrypt for secure password hashing
+            // Return true if the passwords match; otherwise, return false
+            hashedPassword="password";
+            return password === hashedPassword; // This is a basic example, not recommended for production use
+        }
+        
+        function verifyUserName(username, hashedPassword) {
+
+            hashedPassword="admin";
+            return username === hashedPassword; // This is a basic example, not recommended for production use
+        }
+
+        function displayError(message) {
+            var errorElement = document.getElementById('error-message');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+    </script>
 </head>
 
 <body id="backGround">
@@ -43,31 +98,33 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Admin login </h1>
                                     </div>
-                                    <form class="user">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter User Name...">
+                                    <form class="user" id="login-form">
+                                        <label for="username" >Username:</label>
+                                         <div class="form-group">
+                                            <input  type="text" class="form-control form-control-user"
+                                                 aria-describedby="emailHelp"
+                                                placeholder="Enter User Name..." id="username" name="username" required>
                                         </div>
+                                        <!-- <input type="text" id="username" name="username" required><br><br> -->
+                                        
+                                        <label for="password">Password:</label>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password">
+                                            <input  type="password" id="password" name="password" requiredtype="password" class="form-control form-control-user"
+                                               placeholder="Enter user password" >
                                         </div>
                                        <br>
-                                        <a href="index.html" class="btn btn-primary btn-user btn-block">
-                                            Login
-                                        </a>
+                                        <!-- <input type="password" id="password" name="password" required><br><br> -->
+                                        
+                                        <input type="submit"class="btn btn-primary btn-user btn-block" value="Login">
                                         <hr>
                                         
-                                        <a href="index.html" class="btn btn-google btn-user btn-block">
+                                    
+
+                                    </form>     
+                                    <a href="index.html" class="btn btn-google btn-user btn-block">
                                             <i ></i> Back
                                         </a>
-                                        <br>
-                                        <br>
-                                        <br>
-                                        
-                                     
-                                    </form>
+                                        <p id="error-message" style="display: none; color: red;"></p>                            
                                     <hr>
                                   
                                 </div>
